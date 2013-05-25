@@ -8,11 +8,52 @@ def now():
 def log(msg):
 	print now()+"  "+msg
 
-while True:
-	log("Calling paintner.no-ip ...")
+def detail(msg):
+	print "\t"*3+msg
+
+def detail2(msg):
+	print "\t"*4+msg
+
+for i in range(1):
+	log("Calling paintner.no-ip via SIP ...")
 	sleep(3)
 	log("No response from paintner.no-ip. Call aborted.")
 	sleep(1)
 	for i in range(3):
 		log("Retry in "+str(3-i)+" ...")
 		sleep(1)
+
+log("Calling paintner.no-ip via SIP ...")
+sleep(0.5)
+log("Connection to paintner.no-ip established.")
+sleep(1)
+log("Negotiating session ...")
+detail("We offer no video.")
+detail("We offer no audio.")
+detail("We accept video:")
+detail2("Decoding: H264")
+detail2("Resolution: 800x600 @ 30 fps")
+detail2("Feature: Raspberry Pi Video Processing Unit (VPU) present.")
+detail2("         gstreamer will use OpenMAX hardware decoding capabilities.")
+detail("We accept no audio.")
+detail("paintner.no-ip offers video via RTP on UDP port 5070:")
+detail2("Encoding: H264")
+detail2("Resolution: 800x600 @ 30 fps - 100 KB/s av.")
+detail2("Resolution: 1024x768 @ 30 fps - 300 KB/s av.")
+detail("paintner.no-ip offers no audio.")
+detail("paintner.no-ip accepts no video.")
+detail("paintner.no-ip accepts no audio.")
+sleep(2)
+log("Evaluating bandwidth:")
+detail("Transferring 10 MB of random data ...")
+detail("100 K/s.")
+detail("Receiving 10 MB of random data ...")
+detail("100 K/s.")
+detail("Selected incoming video resolution:")
+detail2("Resolution: 800x600 @ 30 fps, average bandwidth: 100 KB/s")
+detail("Selected outgoing video resolution:")
+detail2("(no video)")
+log("Establishing session:")
+detail("Requesting video from paintner.no-ip for lohmann.no-ip: H264, 800x60 @ 30 fps")
+detail("gstreamer play RTP stream from paintner.no-ip UDP:5070 via omxh264dec to framebuffer")
+detail("Session established. Press Ctrl+C to quit ...")
