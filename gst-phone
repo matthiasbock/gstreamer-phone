@@ -1,0 +1,18 @@
+#!/usr/bin/python
+
+from time import sleep
+
+def now():
+	return "2013-05-25 13:12"
+
+def log(msg):
+	print now()+"  "+msg
+
+while True:
+	log("Calling paintner.no-ip ...")
+	sleep(3)
+	log("No response from paintner.no-ip. Call aborted.")
+	sleep(1)
+	for i in range(3):
+		log("Retry in "+str(3-i)+" ...")
+		sleep(1)
