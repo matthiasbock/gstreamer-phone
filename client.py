@@ -9,7 +9,7 @@ class Client:
 		self.ok = False
 
 	def invite(self, remote=('127.0.0.1', 5060)):
-		log("INVITE "+remote[0]+":"+str(remote[1])+" ...")
+		log("INVITE "+remote[0]+":"+str(remote[1])+"(UDP) ...")
 		self.local = (None, None)
 		self.remote = remote
 		self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -20,7 +20,7 @@ class Client:
 			sleep(0.1)
 			data, addr = self.sock.recvfrom(1024)
 			if len(data) > 0:
-				log(data)
+#				log(data)
 				if 'OK' in data:
 					log("OK")
 					return True

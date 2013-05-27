@@ -28,7 +28,7 @@ retries		= int(config.get('settings', 'default_retries'))
 
 # testing for Raspberry Pi OpenMAX libraries
 if 'omxh264dec' in Popen(split(gst_inspect), stdout=PIPE).communicate()[0]:
-	log("Good: gstreamer has OpenMAX superpowers!")
+	log("Good: gstreamer has VPU superpowers!")
 else:
 	log("Warning: gstreamer does not appear to have OpenMAX powers.")
 
@@ -41,7 +41,6 @@ else:
 
 if len(argv) > 1:
 	# client mode
-	log("Inviting "+argv[1]+" ...")
 	from client import *
 	sip = Client()
 	sip.invite((argv[1], 5060))
@@ -49,7 +48,6 @@ if len(argv) > 1:
 
 else:
 	# server mode
-	log("Noone to call. Waiting for incoming call. Press Ctrl+C to quit ...")
 	from server import *
 	s = Server()
 	s.listen(('192.168.2.121', 5060))
