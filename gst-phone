@@ -1,12 +1,9 @@
 #!/usr/bin/python
 
 from sys import argv, exit
-
 from ConfigParser import RawConfigParser
-
 from subprocess import Popen, PIPE
 from shlex import split
-
 from log import *
 
 #print "Updating ..."
@@ -45,7 +42,7 @@ if len(argv) > 1:
 	sip = Client()
 	sip.invite(('192.168.2.110', 5060))
 	if sip.wait(timeout=3):
-		sip.offer()
+		sip.accept()
 
 else:
 	# server mode
@@ -53,5 +50,5 @@ else:
 	s = Server()
 	s.listen(('', 5060))
 	if s.wait(timeout=3):
-		sip.accept()
+		sip.offer()
 

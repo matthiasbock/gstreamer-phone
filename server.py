@@ -25,10 +25,11 @@ class Server:
 					self.remote = addr
 					log("INVITE from "+addr[0]+":"+str(addr[1])+"(UDP)")
 					self.sock.sendto('OK', self.remote)
+					del self.sock
 					log("OK")
 					return True
 		return False
 
 	def offer(self):
-		#Popen(split("gst-launch-1.0 rtspsrc location=rtsp://192.168.2.112:8080/stream.sdp ! rtph264depay ! h264parse ! omxh264dec ! autovideosink")).wait()
-		print "offer stream ..."
+		Popen(split("gst-launch-1.0 v4l2src device=/dev/video0 ! 'video/x-h264' ! legacyh264parse ! rtph264pay ! udpsink host="+self.local[0]+" port=9178"), ().wait()
+
