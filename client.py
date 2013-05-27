@@ -13,8 +13,15 @@ class Client:
 		self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 		self.sock.sendto('INVITE', (host, port))
 	
-	def wait(self, timeout=3000):
-		sleep(timeout)
+	def wait(self, timeout=3):
+		for i in range(int(timeout/0.1)):
+			sleep(0.1)
+			data, addr = self.sock.recvfrom(1024)
+			if len(data) > 0:
+				if 'OK' in data:
+					log("Received OK from "+addr[0]+" UDP port "+str(addr[1])+".")
+					return True
+		return False
 
 def negotiate_streams():
 	log("Negotiating session ...")

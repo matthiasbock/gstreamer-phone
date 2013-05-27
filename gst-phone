@@ -45,7 +45,7 @@ if len(argv) > 1:
 	from client import *
 	sip = Client()
 	sip.invite(argv[1], 5060)
-	sip.wait(timeout=3000)
+	sip.wait(timeout=3)
 
 else:
 	# server mode
@@ -53,4 +53,4 @@ else:
 	from server import *
 	s = Server()
 	s.listen('192.168.2.121', 5060)
-	s.wait(timeout=3000)
+	s.wait(timeout=3)
