@@ -31,5 +31,5 @@ class Server:
 		return False
 
 	def offer(self):
-		Popen(split("gst-launch-1.0 v4l2src device=/dev/video0 ! 'video/x-h264' ! legacyh264parse ! rtph264pay ! udpsink host="+self.local[0]+" port=9178"), ().wait()
+		Popen(split("cvlc v4l2:///dev/video0:chroma=h264:width=800:height=600:framerate=5/1 --sout '#rtp{sdp=rtsp://:8080/stream.sdp}' -vv").wait()
 
