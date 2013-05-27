@@ -1,8 +1,14 @@
 #!/usr/bin/python
 
+print "Updating ..."
+from subprocess import Popen
+Popen(['git','pull']).wait()
+
 from sys import argv
 from time import sleep
 from log import *
+
+configfile = "/etc/gst-phone.conf"
 
 # -1 = infinite
 retry = 0
