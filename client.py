@@ -1,7 +1,20 @@
 #! /usr/bin/python
 
-def connect():
-	return True
+from log import *
+import socket
+from time import sleep
+
+class Client:
+	def __init__(self):
+		self.ok = False
+
+	def invite(self, host, port=5060):
+		# UDP
+		self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+		self.sock.sendto('INVITE', (host, port))
+	
+	def wait(self, timeout=3000):
+		sleep(timeout)
 
 def negotiate_streams():
 	log("Negotiating session ...")

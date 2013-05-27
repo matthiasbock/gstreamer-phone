@@ -1,13 +1,13 @@
 #!/usr/bin/python
 
 from sys import argv, exit
-from time import sleep
-from log import *
 
 from ConfigParser import RawConfigParser
 
 from subprocess import Popen, PIPE
 from shlex import split
+
+from log import *
 
 #print "Updating ..."
 #Popen(['git','pull']).wait()
@@ -17,9 +17,10 @@ configfile = "/etc/gst-phone.conf"
 try:
 	config.read(configfile)
 except:
-	print "Warning: "+configfile+" not found."
+	print "Error: "+configfile+" not found."
 	exit()
 
+# read config file
 v4l2_ctl		= config.get('settings', 'v4l2-ctl')
 gst_inspect	= config.get('settings', 'gst-inspect')
 gst_launch	= config.get('settings', 'gst-launch')
@@ -34,24 +35,22 @@ else:
 # webcam present ?
 d = Popen(split(v4l2_ctl+' --list-devices'), stdout=PIPE, stderr=PIPE).communicate()[0].strip()
 if len(d) > 0 and not 'Failed' in d:
-	print d
+	log(d)
 else:
 	log("No webcam ?")
 
-if len(argv) > 1:		# client mode
+if len(argv) > 1:
+	# client mode
+	log("Inviting "+argv[1]+" ...")
 	from client import *
-	address = argv[1]
-	if retries < 0:
-		log("Retrying until calling succeeds. Press Ctrl+C to quit ...")
-		while not call(address):
-			# retry
-			True
-	else:
-		for i in range(retries+1):
-			call(address)
+	sip = Client()
+	sip.invite(argv[1], 5060)
+	sip.wait(timeout=3000)
 
-else:				# server mode
+else:
+	# server mode
 	log("Noone to call. Waiting for incoming call. Press Ctrl+C to quit ...")
 	from server import *
 	s = Server()
-	s.listen()
+	s.listen('192.168.2.121', 5060)
+	s.wait(timeout=3000)
