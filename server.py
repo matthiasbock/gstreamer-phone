@@ -5,11 +5,14 @@ import socket
 from time import sleep
 
 class Server:
-	def listen(self, local=('127.0.0.1', 5060)):
+	def __init__(self):
+		self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+	
+	def listen(self, local=('', 5060)):
+		# ""=any network interface
 		log("Waiting for INVITE on "+local[0]+":"+str(local[1])+"(UDP) ...")
 		self.local = local
 		self.remote = (None, None)
-		self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 		self.sock.bind( local )
 
 	def wait(self, timeout=30):
@@ -25,3 +28,7 @@ class Server:
 					log("OK")
 					return True
 		return False
+
+	def offer(self):
+		#Popen(split("gst-launch-1.0 rtspsrc location=rtsp://192.168.2.112:8080/stream.sdp ! rtph264depay ! h264parse ! omxh264dec ! autovideosink")).wait()
+		print "offer stream ..."

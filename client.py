@@ -7,12 +7,12 @@ from time import sleep
 class Client:
 	def __init__(self):
 		self.ok = False
+		self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 	def invite(self, remote=('127.0.0.1', 5060)):
 		log("INVITE "+remote[0]+":"+str(remote[1])+"(UDP) ...")
 		self.local = (None, None)
 		self.remote = remote
-		self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 		self.sock.sendto('INVITE', remote)
 	
 	def wait(self, timeout=3):
@@ -26,6 +26,8 @@ class Client:
 					return True
 		return False
 
+	def accept(self):
+		Popen(split("gst-launch-1.0 rtspsrc location=rtsp://192.168.2.112:8080/stream.sdp ! rtph264depay ! h264parse ! omxh264dec ! autovideosink")).wait()
 
 
 def negotiate_streams():
