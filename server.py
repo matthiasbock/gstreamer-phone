@@ -3,6 +3,8 @@
 from log import *
 import socket
 from time import sleep
+from subprocess import Popen, PIPE
+from shlex import split
 
 class Server:
 	def __init__(self):
@@ -26,6 +28,7 @@ class Server:
 					log("INVITE from "+addr[0]+":"+str(addr[1])+"(UDP)")
 					self.sock.sendto('OK', self.remote)
 					log("OK")
+					del self.sock
 					return True
 		return False
 

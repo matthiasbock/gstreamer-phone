@@ -47,8 +47,8 @@ if len(argv) > 1:
 else:
 	# server mode
 	from server import *
-	s = Server()
-	s.listen(('', 5060))
-	if s.wait(timeout=3):
+	sip = Server()
+	sip.listen(('', 5060))
+	if sip.wait(timeout=3):
 		sip.offer()
 
