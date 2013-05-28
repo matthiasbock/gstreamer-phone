@@ -37,7 +37,7 @@ class Client:
 				self.sock.connect((self.remote[0],8080))
 				success = True
 			except:
-				log("wait")
+				log("Waiting for the server ...")
 				sleep(0.1)
 		del self.sock
 		Popen(split("gst-launch-1.0 rtspsrc location=rtsp://"+self.remote[0]+":8080/stream.sdp ! rtph264depay ! h264parse ! omxh264dec ! autovideosink")).wait()
