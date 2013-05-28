@@ -25,11 +25,9 @@ class Server:
 					self.remote = addr
 					log("INVITE from "+addr[0]+":"+str(addr[1])+"(UDP)")
 					self.sock.sendto('OK', self.remote)
-					del self.sock
 					log("OK")
 					return True
 		return False
 
 	def offer(self):
-		Popen(split("cvlc v4l2:///dev/video0:chroma=h264:width=800:height=600:framerate=5/1 --sout '#rtp{sdp=rtsp://:8080/stream.sdp}' -vv").wait()
-
+		Popen(split("cvlc v4l2:///dev/video0:chroma=h264:width=960:height=540 --sout '#rtp{sdp=rtsp://:8080/stream.sdp}' -vv")).wait()

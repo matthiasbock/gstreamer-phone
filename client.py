@@ -29,7 +29,7 @@ class Client:
 		return False
 
 	def accept(self):
-		Popen(split("gst-launch-1.0 rtspsrc location=rtsp://"+self.remote[0]+":"+self.remote[1]+"/gstreamer.sdp ! rtph264depay ! h264parse ! omxh264dec ! autovideosink")).wait()
+		Popen(split("gst-launch-1.0 rtspsrc location=rtsp://"+self.remote[0]+":8080/stream.sdp ! rtph264depay ! h264parse ! omxh264dec ! autovideosink")).wait()
 
 
 def negotiate_streams():
