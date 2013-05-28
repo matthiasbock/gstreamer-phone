@@ -25,10 +25,21 @@ class Client:
 #				log(data)
 				if 'OK' in data:
 					log("OK")
+					del self.sock
 					return True
 		return False
 
 	def accept(self):
+		self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		success = False
+		while not success:
+			try:
+				self.sock.connect((self.remote[0],8080))
+				success = True
+			except:
+				log("wait")
+				sleep(0.1)
+		del self.sock
 		Popen(split("gst-launch-1.0 rtspsrc location=rtsp://"+self.remote[0]+":8080/stream.sdp ! rtph264depay ! h264parse ! omxh264dec ! autovideosink")).wait()
 
 
