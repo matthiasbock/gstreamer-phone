@@ -5,13 +5,23 @@ from time import sleep
 from subprocess import Popen, PIPE
 from shlex import split
 
+import urllib
+import re
+
 portSIP = 5070
 portRTP = 9080
+
+def myIP():
+	f = urllib.urlopen("http://www.canyouseeme.org/")
+	html_doc = f.read()
+	f.close()
+	m = re.search('(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)',html_doc)
+	return m.group(0)
 
 success = False
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 while not success:
-	paitnern_ip = resolve('la-cp386.no-ip.org')
+	paitnern_ip = socket.gethostbyname('la-cp386.no-ip.org')
 	remote = (paintner_ip, portSIP)
 	my_ip = myIP()
 	msg = 'Lohmann:'+str(portRTP)
@@ -24,7 +34,7 @@ while not success:
 			print 'Paintner: OK'
 			success = True
 			break
-		else
+		else:
 			print 'Paintner: no response'
 del sock
 	

@@ -32,3 +32,4 @@ else:
 if len(Popen(['pidof','X'], stdout=PIPE).communicate()[0].strip()) > 0:
 	log('Xorg running, displaying on xvimagesink')
 	sink = 'xvimagesink'
+

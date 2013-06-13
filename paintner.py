@@ -16,7 +16,7 @@ while len(data) == 0:
 	data, addr = sock.recvfrom(1024)
 	if len(data) == 0 or not 'Lohmann' in data:
 		data = ''
-		print 'Lohmann: did not make contact'
+		print 'Lohmann did not make contact'
 	else:
 		print 'Lohmann: OK'
 del sock
