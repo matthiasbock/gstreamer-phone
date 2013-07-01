@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# RTP
+#gst-launch-1.0 -v --gst-debug=eglgles:5 udpsrc port=9078 ! 'application/x-rtp,payload=96,encoding-name=H264' ! decodebin ! autovideosink
+#gst-launch-1.0 -v --gst-debug=eglgles:5 udpsrc port=9078 ! 'video/x-h264' ! queue ! h264parse ! omxh264dec ! autovideosink
+
+# TCP
+#gst-launch-1.0 -v --gst-debug=eglgles:5 tcpclientsrc host=bonesaw port=9078 ! 'video/x-h264'  ! h264parse ! omxh264dec ! autovideosink
+
+# file
+#gst-launch-1.0 -v filesrc location=src/c920.h264 ! h264parse ! omxh264dec ! autovideosink
+
+# stdin
+gst-launch-1.0 -v filesrc location=/dev/stdin ! h264parse ! omxh264dec ! eglglessink
+
