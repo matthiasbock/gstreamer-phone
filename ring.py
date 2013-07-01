@@ -7,6 +7,7 @@ from time import sleep
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 
+# beeper: pin 16, GPIO 23
 beeper = 23
 GPIO.setup(beeper, OUT)
 
@@ -23,12 +24,12 @@ def klingelton(repeats=1):
 			beep(0.04, 0.035)
 
 def keinfreizeichenton():
-	for i in range(10):
+	for i in range(8):
 		beep(0.25, 0.25)
 
 def anrufanfangton():
-	beep(0.1, 0.1)
-	beep(0.1, 0.1)
+	beep(0.06, 0.1)
+	beep(0.06, 0.1)
 
 def anrufendeton():
 	for i in range(4):
