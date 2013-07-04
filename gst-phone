@@ -7,13 +7,18 @@ if not path in sys.path:
 
 from subprocess import Popen
 from shlex import split
+from monitor import pidof
 
 # parallel task
 Popen(split(path+'/monitor.py'))
 
 # ensure, only one instance is running
-Popen(split('killall gst-phone'))
-Popen(split('killall gstreamer-phone'))
+p = pidof('gst-phone').strip().split(' ')
+if len(p) > 1:
+	Popen(split('kill '+' '.join(p[:-1])))
+p = pidof('gstreamer-phone').strip().split(' ')
+if len(p) > 1:
+	Popen(split('kill '+' '.join(p[:-1])))
 
 if open('/etc/hostname').read().strip().lower() == 'pummeluff':
 	import lohmann
