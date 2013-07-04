@@ -4,6 +4,7 @@ from socket import gethostbyname
 from subprocess import Popen, PIPE
 from shlex import split
 import urllib, re
+from log import log
 
 def internetIP():
 	f = urllib.urlopen("http://www.canyouseeme.org/")
@@ -27,26 +28,26 @@ ff02::2         ip6-allrouters
 def internet():
 	try:
 		ip = internetIP()
-		#print 'External IP address is '+ip
+		log('External IP address is '+ip)
 
 		f = open('/tmp/hosts','w')
 		f.write(default_hosts+ip+'\tpummeluff')
 		f.close()
 
-		Popen(split('scp /tmp/hosts root@la-cp386.no-ip.org:/etc/'))
+		Popen(split('scp /tmp/hosts root@la-cp386.no-ip.org:/etc/'), stdout=PIPE)
 	except:
 		pass
 
 def lan():
 	try:
 		ip = lanIP()
-		#print 'LAN IP address is '+ip
+		log('LAN IP address is '+ip)
 
 		f = open('/tmp/hosts','w')
 		f.write(default_hosts+ip+'\tpummeluff')
 		f.close()
 
-		Popen(split('scp /tmp/hosts root@urmel.local:/etc/'))
+		Popen(split('scp /tmp/hosts root@urmel.local:/etc/'), stdout=PIPE)
 	except:
 		pass
 
