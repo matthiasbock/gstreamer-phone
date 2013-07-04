@@ -20,7 +20,7 @@ def beep(ontime=1, offtime=0):
 def klingelton(repeats=1):
 	for j in range(repeats):
 		sleep(3)
-		for i in range(int(1./(0.05+0.035))):
+		for i in range(int(1.5/(0.05+0.035))):
 			beep(0.04, 0.035)
 
 def keinfreizeichenton():

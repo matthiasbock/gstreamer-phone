@@ -21,6 +21,9 @@ if 'omxh264dec' in Popen(['gst-inspect-1.0'], stdout=PIPE).communicate()[0]:
 else:
 	log("Error: gstreamer has no Raspberry Pi superpowers")
 
+# parallel task
+Popen(split(path+'/monitor.py'))
+
 while True:
 	if pressed(btnLeft):
 		waehlton()
@@ -43,15 +46,13 @@ while True:
 		waehlton()
 		success = False
 		try:
-			log("Paintner resolved to "+gethostbyname("la-cp386.no-ip.org"))
+			ip = gethostbyname("la-cp386.no-ip.org")
+			log("Paintner resolved to "+ip)
 			success = True
 		except:
 			log("Network error: Unable to resolve Paintner's IP address. Check your LAN / WLAN connection.")
 			keinfreizeichenton()
 		if success:
+			log("Calling "+ip+" ...")
 			Popen(split(path+'/streaming/lohmann-to-paintner'))
-			klingelton()
-			sleep(1)
-#			if pidof('gst-launch-1.0') != '':
-#				anrufanfangton()
 	sleep(0.1)
