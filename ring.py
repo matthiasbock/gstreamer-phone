@@ -24,8 +24,13 @@ def klingelton(repeats=1):
 			beep(0.04, 0.035)
 
 def keinfreizeichenton():
-	for i in range(8):
+	for i in range(4):
 		beep(0.25, 0.25)
+
+def neustartton():
+	beep(0.06, 0.1)
+	beep(0.06, 0.1)
+	beep(0.06, 0.1)
 
 def herunterfahrton():
 	beep(0.06, 0.1)
@@ -46,17 +51,17 @@ def waehlton():
 if __name__ == '__main__':
 	waehlton()
 	sleep(1)
-	herunterfahrton()
-	sleep(1)
-	waehlton()
-	sleep(1)
-	keinfreizeichenton()
-	sleep(1)
-	waehlton()
-	sleep(1)
-	klingelton()
-	sleep(1)
-	anrufanfangton()
-	sleep(1)
-	anrufendeton()
+	neustartton()
+#	sleep(1)
+#	waehlton()
+#	sleep(1)
+#	keinfreizeichenton()
+#	sleep(1)
+#	waehlton()
+#	sleep(1)
+#	klingelton()
+#	sleep(1)
+#	anrufanfangton()
+#	sleep(1)
+#	anrufendeton()
 	

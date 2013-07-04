@@ -5,6 +5,7 @@ import sys
 if not path in sys.path:
 	sys.path.append(path)
 
+from socket import gethostbyname
 from subprocess import Popen, PIPE
 from shlex import split
 from time import sleep
@@ -25,13 +26,32 @@ while True:
 		waehlton()
 		sleep(1)
 		if pressed(btnLeft): # still pressed
-			herunterfahrton()
-			Popen(['halt'])
+			if pressed(btnRight): # both pressed at once
+				log("Reboot")
+				neustartton()
+				Popen(['reboot'])
+			else:
+				log("Shutdown")
+				herunterfahrton()
+				Popen(['halt'])
 		else:
-			Popen(split('killall ssh'))
-			Popen(split('killall gst-launch-1.0'))
+			Popen(split('killall ssh'), stdout=PIPE, stderr=PIPE)
+			Popen(split('killall gst-launch-1.0'), stdout=PIPE, stderr=PIPE)
+			log("Session terminated.")
 	if pressed(btnRight):
+		log("Initiating session ...")
 		waehlton()
-		Popen(split(path+'/streaming/lohmann-to-paintner'))
-		klingelton()
+		success = False
+		try:
+			log("Paintner resolved to "+gethostbyname("la-cp386.no-ip.org"))
+			success = True
+		except:
+			log("Network error: Unable to resolve Paintner's IP address. Check your LAN / WLAN connection.")
+			keinfreizeichenton()
+		if success:
+			Popen(split(path+'/streaming/lohmann-to-paintner'))
+			klingelton()
+			sleep(1)
+#			if pidof('gst-launch-1.0') != '':
+#				anrufanfangton()
 	sleep(0.1)

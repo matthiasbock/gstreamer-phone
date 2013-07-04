@@ -2,7 +2,7 @@
 ### BEGIN INIT INFO
 # Provides:          gstreamer-phone
 # Should-Start:      
-# Required-Start:    $local_fs
+# Required-Start:    $local_fs networking ifplugd
 # Required-Stop:     $local_fs
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
@@ -11,5 +11,5 @@
 ### END INIT INFO
 
 /usr/src/gstreamer-phone/cronscript.py
-/usr/src/gstreamer-phone/gst-phone.py
+/usr/src/gstreamer-phone/gst-phone
 

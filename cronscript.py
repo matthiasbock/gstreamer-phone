@@ -20,8 +20,11 @@ ff02::2         ip6-allrouters
 127.0.1.1       localhost
 """
 
-f = open('/tmp/hosts','w')
-f.write(default_hosts+'\n'+myIP()+'\tpummeluff')
-f.close()
+try:
+	f = open('/tmp/hosts','w')
+	f.write(default_hosts+'\n'+myIP()+'\tpummeluff')
+	f.close()
 
-Popen(split('scp /tmp/hosts root@la-cp386.no-ip.org:/etc/'))
+	Popen(split('scp /tmp/hosts root@la-cp386.no-ip.org:/etc/'))
+except:
+	pass

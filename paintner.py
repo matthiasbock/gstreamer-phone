@@ -31,8 +31,12 @@ while True:
 		waehlton()
 		sleep(1)
 		if pressed(btnLeft): # still pressed
-			herunterfahrton()
-			Popen(['halt'])
+			if pressed(btnRight): # both pressed at once
+				neustartton()
+				Popen(['reboot'])
+			else:
+				herunterfahrton()
+				Popen(['halt'])
 		else:
 			Popen(split('killall ssh'))
 			Popen(split('killall gst-launch-0.10'))
