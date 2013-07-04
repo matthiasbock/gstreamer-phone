@@ -57,9 +57,8 @@ if __name__ == '__main__':
 	from socket import gethostbyname
 	try:
 		urmel = gethostbyname('urmel').strip()
-		if urmel != '':
-			if lan() is None:
-				raise
+		if urmel == '' or lan() is None:
+			raise
 	except:
 		internet()
 
