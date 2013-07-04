@@ -19,26 +19,27 @@ def pidof(name):
 def ps_aux():
 	return Popen(split('ps aux'), stdout=PIPE).communicate()[0].strip()
 
-established = False
-ringing = False
+if __name__ == '__main__':
+	established = False
+	ringing = False
 
-anrufanfangton()
+	anrufanfangton()
 
-while True:
-	if 'ssh root@la-cp386.no-ip.org' in ps_aux():
-		if pidof('gst-launch-0.10') != '' or pidof('gst-launch-1.0') != '':
-			if not established:
-				anrunfanfangton()
-				established = True
+	while True:
+		if 'ssh root@' in ps_aux():
+			if pidof('gst-launch-0.10') != '' or pidof('gst-launch-1.0') != '':
+				if not established:
+					anrunfanfangton()
+					established = True
+			else:
+				established = False
+				klingelton()
+				ringing = True
 		else:
-			established = False
-			klingelton()
-			ringing = True
-	else:
-		if established:
-			anrufendeton()
-			established = False
-		elif ringing:
-			keinfreizeichenton()
-			ringing = False
-	sleep(1)
+			if established:
+				anrufendeton()
+				established = False
+			elif ringing:
+				keinfreizeichenton()
+				ringing = False
+		sleep(1)

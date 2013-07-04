@@ -32,7 +32,7 @@ ff02::2         ip6-allrouters
 def internet():
 	try:
 		ip = internetIP()
-		print ip
+		print 'My IP address is '+ip
 		f = open('/tmp/hosts','w')
 		f.write(default_hosts+ip+'\tpummeluff')
 		f.close()
@@ -44,7 +44,7 @@ def internet():
 def lan():
 	try:
 		ip = lanIP()
-		print ip
+		print 'My IP address is '+ip
 		f = open('/tmp/hosts','w')
 		f.write(default_hosts+ip+'\tpummeluff')
 		f.close()
