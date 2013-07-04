@@ -25,23 +25,9 @@ else:
 Popen(split(path+'/monitor.py'))
 
 while True:
-	if pressed(btnLeft):
-		waehlton()
-		sleep(1)
-		if pressed(btnLeft): # still pressed
-			if pressed(btnRight): # both pressed at once
-				log("Reboot")
-				neustartton()
-				Popen(['reboot'])
-			else:
-				log("Shutdown")
-				herunterfahrton()
-				Popen(['halt'])
-		else:
-			Popen(split('killall ssh'), stdout=PIPE, stderr=PIPE)
-			Popen(split('killall gst-launch-0.10'), stdout=PIPE, stderr=PIPE)
-			Popen(split('killall gst-launch-1.0'), stdout=PIPE, stderr=PIPE)
-			log("Session terminated.")
+	#
+	# Start button
+	#
 	if pressed(btnRight):
 		log("Initiating session ...")
 		waehlton()
@@ -58,9 +44,32 @@ while True:
 				log("Paintner resolved to "+ip)
 				success = True
 			except:
-				log("Network error: Unable to resolve Paintner's IP address. Check your LAN / WLAN connection.")
+				log("Network error: Unable to resolve Paintner's IP address. Check your LAN or WLAN connection.")
 				keinfreizeichenton()
 		if success:
 			log("Calling "+ip+" ...")
 			Popen(split(path+'/streaming/lohmann-to-paintner '+ip))
+	
+	#
+	# Stop button
+	#
+	# patch: right button press also somehow invokes left button event
+	if pressed(btnLeft) and not pressed(btnRight):
+		waehlton()
+		sleep(1)
+		if pressed(btnLeft): # still pressed
+			if pressed(btnRight): # both pressed at once
+				log("Reboot")
+				neustartton()
+				Popen(['reboot'])
+			else:
+				log("Shutdown")
+				herunterfahrton()
+				Popen(['halt'])
+		else:
+			Popen(split('killall ssh'), stdout=PIPE, stderr=PIPE)
+			Popen(split('killall gst-launch-0.10'), stdout=PIPE, stderr=PIPE)
+			Popen(split('killall gst-launch-1.0'), stdout=PIPE, stderr=PIPE)
+			log("Session terminated.")
+
 	sleep(0.1)

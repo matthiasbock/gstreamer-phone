@@ -5,6 +5,7 @@ import sys
 if not path in sys.path:
 	sys.path.append(path)
 
+from socket import gethostbyname
 from subprocess import Popen, PIPE
 from shlex import split
 from time import sleep
@@ -30,6 +31,9 @@ else:
 Popen(split(path+'/monitor.py'))
 
 while True:
+	#
+	# Start button
+	#
 	if pressed(btnRight):
 		log("Initiating session ...")
 		waehlton()
@@ -39,12 +43,15 @@ while True:
 			log("Lohmann resolved to "+ip)
 			success = True
 		except:
-			log("Network error: Unable to resolve Lohmann's IP address. Check your LAN / WLAN connection.")
+			log("Network error: Unable to resolve Lohmann's IP address. Check your LAN or WLAN connection.")
 			keinfreizeichenton()
 		if success:
 			log("Calling "+ip+" ...")
 			Popen(split(path+'/streaming/paintner-to-lohmann'))
 
+	#
+	# Stop button
+	#
 	# patch: right button press also somehow invokes left button event
 	if pressed(btnLeft) and not pressed(btnRight):
 		waehlton()

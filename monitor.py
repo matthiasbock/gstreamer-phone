@@ -22,6 +22,8 @@ def ps_aux():
 established = False
 ringing = False
 
+anrufanfangton()
+
 while True:
 	if 'ssh root@la-cp386.no-ip.org' in ps_aux():
 		if pidof('gst-launch-0.10') != '' or pidof('gst-launch-1.0') != '':
