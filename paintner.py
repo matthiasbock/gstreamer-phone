@@ -21,8 +21,8 @@ else:
 	log("Error: gstreamer has no UVC H.264 superpowers")
 
 # testing for webcam
-if 'Logitech' in Popen(split('v4l2-ctl --list-devices'), stdout=PIPE, stderr=PIPE).communicate()[0].strip():
-	log("Logitech webcam present")
+if 'C920' in Popen(split('v4l2-ctl --list-devices'), stdout=PIPE, stderr=PIPE).communicate()[0].strip():
+	log("Webcam: Logitech C920 HD")
 else:
 	log("Error: Webcam not found")
 
@@ -30,7 +30,23 @@ else:
 Popen(split(path+'/monitor.py'))
 
 while True:
-	if pressed(btnLeft):
+	if pressed(btnRight):
+		log("Initiating session ...")
+		waehlton()
+		success = False
+		try:
+			ip = gethostbyname("pummeluff")
+			log("Lohmann resolved to "+ip)
+			success = True
+		except:
+			log("Network error: Unable to resolve Lohmann's IP address. Check your LAN / WLAN connection.")
+			keinfreizeichenton()
+		if success:
+			log("Calling "+ip+" ...")
+			Popen(split(path+'/streaming/paintner-to-lohmann'))
+
+	# patch: right button press also somehow invokes left button event
+	if pressed(btnLeft) and not pressed(btnRight):
 		waehlton()
 		sleep(1)
 		if pressed(btnLeft): # still pressed
@@ -47,18 +63,4 @@ while True:
 			Popen(split('killall gst-launch-0.10'), stdout=PIPE, stderr=PIPE)
 			Popen(split('killall gst-launch-1.0'), stdout=PIPE, stderr=PIPE)
 			log("Session terminated.")
-	if pressed(btnRight):
-		log("Initiating session ...")
-		waehlton()
-		success = False
-		try:
-			ip = gethostbyname("pummeluff")
-			log("Lohmann resolved to "+ip)
-			success = True
-		except:
-			log("Network error: Unable to resolve Lohmann's IP address. Check your LAN / WLAN connection.")
-			keinfreizeichenton()
-		if success:
-			log("Calling "+ip+" ...")
-			Popen(split(path+'/streaming/paintner-to-lohmann'))
 	sleep(0.1)
