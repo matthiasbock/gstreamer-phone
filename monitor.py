@@ -29,7 +29,7 @@ if __name__ == '__main__':
 		if 'ssh root@' in ps_aux():
 			if pidof('gst-launch-0.10') != '' or pidof('gst-launch-1.0') != '':
 				if not established:
-					anrunfanfangton()
+					anrufanfangton()
 					established = True
 			else:
 				established = False
