@@ -12,4 +12,3 @@
 
 # stdin
 gst-launch-1.0 -v filesrc location=/dev/stdin ! h264parse ! omxh264dec ! eglglessink
-
