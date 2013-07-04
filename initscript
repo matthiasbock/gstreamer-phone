@@ -11,5 +11,5 @@
 ### END INIT INFO
 
 /usr/src/gstreamer-phone/cronscript.py
-/usr/src/gstreamer-phone/gst-phone &
+/usr/src/gstreamer-phone/gst-phone
 
