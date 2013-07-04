@@ -30,9 +30,9 @@ while True:
 		waehlton()
 		success = False
 		try:
-			ip = gethostbyname("urmel")
+			ip = gethostbyname("urmel.local")
 			log("Paintner was found in the local network at "+ip)
-			success = (ip != '')
+			success = (ip is not None) and (ip != '')
 		except:
 			pass
 		if not success:
