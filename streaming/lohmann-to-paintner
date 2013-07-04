@@ -1,3 +1,3 @@
 #!/bin/bash
 
-ssh root@la-cp386.no-ip.org "/usr/src/gstreamer-phone/streaming/paintner-to-lohmann"
+ssh root@$1 "/usr/src/gstreamer-phone/streaming/paintner-to-lohmann"

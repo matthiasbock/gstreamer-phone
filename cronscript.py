@@ -20,11 +20,31 @@ ff02::2         ip6-allrouters
 127.0.1.1       localhost
 """
 
-try:
-	f = open('/tmp/hosts','w')
-	f.write(default_hosts+'\n'+myIP()+'\tpummeluff')
-	f.close()
+def internet():
+	try:
+		f = open('/tmp/hosts','w')
+		f.write(default_hosts+'\n'+myIP()+'\tpummeluff')
+		f.close()
 
-	Popen(split('scp /tmp/hosts root@la-cp386.no-ip.org:/etc/'))
-except:
-	pass
+		Popen(split('scp /tmp/hosts root@la-cp386.no-ip.org:/etc/'))
+	except:
+		pass
+
+def lan():
+	try:
+		f = open('/tmp/hosts','w')
+		f.write(default_hosts)
+		f.close()
+
+		Popen(split('scp /tmp/hosts root@urmel:/etc/'))
+	except:
+		pass
+
+if __name__ == '__main__':
+	from socket import gethostbyname
+	try:
+		urmel = gethostbyname('urmel').strip()
+		if urmel != '':
+			lan()
+	except:
+		internet()

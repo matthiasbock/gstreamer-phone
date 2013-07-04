@@ -47,13 +47,20 @@ while True:
 		waehlton()
 		success = False
 		try:
-			ip = gethostbyname("la-cp386.no-ip.org")
-			log("Paintner resolved to "+ip)
-			success = True
+			ip = gethostbyname("urmel")
+			log("Paintner was found in the local network at "+ip)
+			success = (ip != '')
 		except:
-			log("Network error: Unable to resolve Paintner's IP address. Check your LAN / WLAN connection.")
-			keinfreizeichenton()
+			pass
+		if not success:
+			try:
+				ip = gethostbyname("la-cp386.no-ip.org")
+				log("Paintner resolved to "+ip)
+				success = True
+			except:
+				log("Network error: Unable to resolve Paintner's IP address. Check your LAN / WLAN connection.")
+				keinfreizeichenton()
 		if success:
 			log("Calling "+ip+" ...")
-			Popen(split(path+'/streaming/lohmann-to-paintner'))
+			Popen(split(path+'/streaming/lohmann-to-paintner '+ip))
 	sleep(0.1)
