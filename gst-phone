@@ -13,12 +13,15 @@ from monitor import pidof
 Popen(split(path+'/monitor.py'))
 
 # ensure, only one instance is running
-p = pidof('gst-phone').strip().split(' ')
-if len(p) > 1:
-	Popen(split('kill '+' '.join(p[:-1])))
-p = pidof('gstreamer-phone').strip().split(' ')
-if len(p) > 1:
-	Popen(split('kill '+' '.join(p[:-1])))
+#p = pidof('gst-phone').strip().split(' ')
+#if len(p) > 1:
+#	Popen(split('kill '+' '.join(p[1:])))
+#p = pidof('gstreamer-phone').strip().split(' ')
+#if len(p) > 1:
+#	Popen(split('kill '+' '.join(p[1:])))
+
+# at least kill the startup script
+Popen(split('killall gstreamer-phone')).wait()
 
 if open('/etc/hostname').read().strip().lower() == 'pummeluff':
 	import lohmann
