@@ -39,6 +39,7 @@ while True:
 				Popen(['halt'])
 		else:
 			Popen(split('killall ssh'), stdout=PIPE, stderr=PIPE)
+			Popen(split('killall gst-launch-0.10'), stdout=PIPE, stderr=PIPE)
 			Popen(split('killall gst-launch-1.0'), stdout=PIPE, stderr=PIPE)
 			log("Session terminated.")
 	if pressed(btnRight):
