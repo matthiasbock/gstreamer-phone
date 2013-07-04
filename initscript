@@ -3,7 +3,7 @@
 ### BEGIN INIT INFO
 # Provides:          gstreamer-phone
 # Should-Start:      
-# Required-Start:    networking ifplugd
+# Required-Start:    networking
 # Required-Stop:     
 # Default-Start:     2
 # Default-Stop:      
