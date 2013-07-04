@@ -21,9 +21,6 @@ if 'omxh264dec' in Popen(['gst-inspect-1.0'], stdout=PIPE).communicate()[0]:
 else:
 	log("Error: gstreamer has no Raspberry Pi superpowers")
 
-# parallel task
-Popen(split(path+'/monitor.py'))
-
 while True:
 	#
 	# Start button

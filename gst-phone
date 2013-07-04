@@ -5,6 +5,16 @@ import sys
 if not path in sys.path:
 	sys.path.append(path)
 
+from subprocess import Popen
+from shlex import split
+
+# parallel task
+Popen(split(path+'/monitor.py'))
+
+# ensure, only one instance is running
+Popen(split('killall gst-phone'))
+Popen(split('killall gstreamer-phone'))
+
 if open('/etc/hostname').read().strip().lower() == 'pummeluff':
 	import lohmann
 else:

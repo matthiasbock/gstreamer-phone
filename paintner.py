@@ -27,9 +27,6 @@ if 'C920' in Popen(split('v4l2-ctl --list-devices'), stdout=PIPE, stderr=PIPE).c
 else:
 	log("Error: Webcam not found")
 
-# parallel task
-Popen(split(path+'/monitor.py'))
-
 while True:
 	#
 	# Start button
