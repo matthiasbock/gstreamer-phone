@@ -58,7 +58,8 @@ if __name__ == '__main__':
 	try:
 		urmel = gethostbyname('urmel').strip()
 		if urmel != '':
-			lan()
+			if lan() is None:
+				raise
 	except:
 		internet()
 

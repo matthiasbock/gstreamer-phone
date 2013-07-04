@@ -9,9 +9,6 @@ from subprocess import Popen
 from shlex import split
 from monitor import pidof
 
-# parallel task
-Popen(split(path+'/monitor.py'))
-
 # ensure, only one instance is running
 #p = pidof('gst-phone').strip().split(' ')
 #if len(p) > 1:
@@ -21,7 +18,10 @@ Popen(split(path+'/monitor.py'))
 #	Popen(split('kill '+' '.join(p[1:])))
 
 # at least kill the startup script
-Popen(split('killall gstreamer-phone')).wait()
+Popen(split('killall gstreamer-phone'))
+
+# parallel task
+Popen(split(path+'/monitor.py'))
 
 if open('/etc/hostname').read().strip().lower() == 'pummeluff':
 	import lohmann
