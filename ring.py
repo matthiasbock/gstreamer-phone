@@ -27,18 +27,27 @@ def keinfreizeichenton():
 	for i in range(8):
 		beep(0.25, 0.25)
 
+def herunterfahrton():
+	beep(0.06, 0.1)
+	beep(0.4, 0.1)
+	beep(0.06, 0.1)
+
 def anrufanfangton():
 	beep(0.06, 0.1)
 	beep(0.06, 0.1)
 
 def anrufendeton():
-	for i in range(4):
+	for i in range(3):
 		beep(0.5, 0.5)
 
 def waehlton():
 	beep(0.1)
 
 if __name__ == '__main__':
+	waehlton()
+	sleep(1)
+	herunterfahrton()
+	sleep(1)
 	waehlton()
 	sleep(1)
 	keinfreizeichenton()

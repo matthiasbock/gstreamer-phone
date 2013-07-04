@@ -1,0 +1,12 @@
+#!/usr/bin/python
+
+path = '/usr/src/gstreamer-phone'
+import sys
+if not path in sys.path:
+	sys.path.append(path)
+
+if open('/etc/hostname').read().strip().lower() == 'pummeluff':
+	import lohmann
+else:
+	import paintner
+
