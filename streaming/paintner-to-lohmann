@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [ "$1" == "" ]; then
+	exit
+	fi
+
 gstreamer_phone="/usr/src/gstreamer-phone/streaming"
-$gstreamer_phone/record | ssh root@pummeluff "$gstreamer_phone/playback" -o ConnectTimeout=5
+
+$gstreamer_phone/record | ssh root@$1 "$gstreamer_phone/playback" -o ConnectTimeout=5
 
