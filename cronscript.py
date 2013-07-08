@@ -44,7 +44,7 @@ def lan():
 		log('LAN IP address is '+ip)
 
 		f = open('/tmp/hosts','w')
-		f.write(default_hosts+ip+'\tpummeluff')
+		f.write(default_hosts)
 		f.close()
 
 		Popen(split('scp /tmp/hosts root@urmel.local:/etc/'), stdout=PIPE)

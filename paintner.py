@@ -36,15 +36,21 @@ while True:
 		waehlton()
 		success = False
 		try:
-			ip = gethostbyname("pummeluff")
-			log("Lohmann resolved to "+ip)
+			ip = gethostbyname("pummeluff.local")
 			success = True
 		except:
-			log("Network error: Unable to resolve Lohmann's IP address. Check your LAN or WLAN connection.")
-			keinfreizeichenton()
+			pass
+		if not success:
+			try:
+				ip = gethostbyname("pummeluff")
+				success = True
+			except:
+				log("Network error: Unable to resolve Lohmann's IP address. Check your LAN or WLAN connection.")
+				keinfreizeichenton()
 		if success:
+			log("Lohmann resolved to "+ip)
 			log("Calling "+ip+" ...")
-			Popen(split(path+'/streaming/paintner-to-lohmann'))
+			Popen(split(path+'/streaming/paintner-to-lohmann '+ip))
 
 	#
 	# Stop button
