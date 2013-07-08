@@ -1,3 +1,5 @@
 #!/bin/bash
 
-ssh root@$1 "/usr/src/gstreamer-phone/streaming/paintner-to-lohmann" -o ConnectTimeout=10
+gstreamer_phone="/usr/src/gstreamer-phone/streaming"
+ssh root@$1 "$gstreamer_phone/paintner-to-lohmann" -o ConnectTimeout=5
+
