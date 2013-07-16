@@ -1,0 +1,4 @@
+#!/bin/bash
+
+gst-launch-1.0 v4l2src ! "video/x-raw,width=640,height=480,framerate=15/1" ! omxh264enc target-bitrate=400000  ! "video/x-h264,profile=high" ! rtph264pay ! udpsink host=localhost port=9070
+

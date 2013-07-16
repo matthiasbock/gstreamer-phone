@@ -9,5 +9,5 @@ gst-launch-1.0 -v udpsrc port=9070 ! 'application/x-rtp,payload=96,encoding-name
 
 #
 # stdin
-#gst-launch-1.0 -v filesrc location=/dev/stdin ! queue2 use-buffering=true low-percent=0 high-percent=100 max-size-buffers=0 max-size-bytes=0 max-size-time=200000000000 ! h264parse ! omxh264dec ! eglglessink sync=false
+#gst-launch-1.0 -v filesrc location=/dev/stdin ! queue2 use-buffering=true low-percent=0 high-percent=100 max-size-buffers=0 max-size-bytes=0 max-size-time=200000000000 ! h264parse ! omxh264dec ! eglglessink
 
