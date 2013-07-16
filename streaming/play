@@ -1,10 +1,11 @@
 #!/bin/bash
 
+kill -s KILL $(pidof gst-launch-1.0)
+
 # RTP
-gst-launch-1.0 -v udpsrc port=9070 ! 'application/x-rtp,payload=96,encoding-name=H264' ! rtph264depay ! h264parse ! omxh264dec ! eglglessink sync=false
+gst-launch-1.0 -v udpsrc port=9070 ! 'application/x-rtp,payload=96,encoding-name=H264' ! queue2 use-buffering=true low-percent=0 high-percent=100 max-size-time=10000000000 ! rtph264depay ! h264parse ! omxh264dec ! eglglessink sync=false
 
-#queue2 use-buffering=true low-percent=0 high-percent=100  low-percent=0 high-percent=100 max-size-buffers=0 max-size-bytes=0 max-size-time=1000000000 ! 
-
+#
 # stdin
 #gst-launch-1.0 -v filesrc location=/dev/stdin ! queue2 use-buffering=true low-percent=0 high-percent=100 max-size-buffers=0 max-size-bytes=0 max-size-time=200000000000 ! h264parse ! omxh264dec ! eglglessink sync=false
 
