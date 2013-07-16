@@ -4,7 +4,7 @@
 #gst-launch-0.10 -v v4l2src device=/dev/video1 ! 'video/x-h264,width=800' ! rtph264pay ! udpsink host=pikachu port=9078 sync=false
 
 # RTP/UDP
-gst-launch-0.10 -q uvch264_src device=/dev/video0 name=src auto-start=true initial-bitrate=400000 src.vfsrc ! queue ! 'video/x-raw-yuv,width=320,height=240' ! fakesink . src.vidsrc ! queue ! 'video/x-h264,width=1280,height=720,framerate=30/1' ! rtph264pay ! udpsink host=pummeluff.local port=9070
+gst-launch-0.10 -v uvch264_src device=/dev/video0 name=src auto-start=true initial-bitrate=400000 src.vfsrc ! queue ! 'video/x-raw-yuv,width=320,height=240' ! eglglessink . src.vidsrc ! queue ! 'video/x-h264,profile=baseline,width=1024,height=576,framerate=15/1' ! fakesink #rtph264pay ! udpsink host=pummeluff.local port=9070
 
 # TCP
 #gst-launch-0.10 -v uvch264_src device=/dev/video1 name=src auto-start=true initial-bitrate=360000 src.vfsrc ! queue ! 'video/x-raw-yuv,width=320,height=240' ! fakesink . src.vidsrc ! queue ! 'video/x-h264,width=1280,height=720,framerate=5/1' ! tcpserversink host=pikachu port=9078

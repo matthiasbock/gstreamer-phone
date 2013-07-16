@@ -6,5 +6,17 @@ if [ "$1" == "" ]; then
 
 gstreamer_phone="/usr/src/gstreamer-phone/streaming"
 
-$gstreamer_phone/record | ssh root@$1 "$gstreamer_phone/playback" -o ConnectTimeout=5
+# establish SSH tunnel to communication endpoint
+#ssh -o StrictHostKeyChecking=no root@$1 -fNR 9070:localhost:9070 
+
+# begin playback on endpoint
+ssh -o ConnectTimeout=5 -o StrictHostKeyChecking=no root@$1 "$gstreamer_phone/playback" &
+# give gstreamer time to startup
+sleep 2
+
+# begin streaming
+$gstreamer_phone/record
+
+ssh -o StrictHostKeyChecking=no root@$1 "killall gst-launch-1.0" 
+#killall ssh
 
