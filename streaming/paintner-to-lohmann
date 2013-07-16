@@ -1,6 +1,14 @@
 #!/bin/bash
 
+#
+# $1: remote end to stream to
+#
+# This script starts capturing locally and
+# starts playback on the remote end via SSH command
+#
+
 if [ "$1" == "" ]; then
+	echo "Error: Remote address not specified"
 	exit
 	fi
 
@@ -9,13 +17,14 @@ gstreamer_phone="/usr/src/gstreamer-phone/streaming"
 # establish SSH tunnel to communication endpoint
 #ssh -o StrictHostKeyChecking=no root@$1 -fNR 9070:localhost:9070 
 
-# begin playback on endpoint
-ssh -o ConnectTimeout=5 -o StrictHostKeyChecking=no root@$1 "$gstreamer_phone/playback" &
-# give gstreamer time to startup
-sleep 2
+# begin playback on the remote end
+ssh -o ConnectTimeout=5 -o StrictHostKeyChecking=no root@$1 "$gstreamer_phone/play" &
 
-# begin streaming
-$gstreamer_phone/record
+# give the gstreamer on the remote end some time for startup
+sleep 1
+
+# begin capturing and streaming
+$gstreamer_phone/capture
 
 ssh -o StrictHostKeyChecking=no root@$1 "killall gst-launch-1.0" 
 #killall ssh
