@@ -24,7 +24,7 @@ ssh -o ConnectTimeout=5 -o StrictHostKeyChecking=no root@$1 "$gstreamer_phone/pl
 sleep 1
 
 # begin capturing and streaming
-$gstreamer_phone/capture
+$gstreamer_phone/capture $1
 
 ssh -o StrictHostKeyChecking=no root@$1 "killall gst-launch-1.0" 
 #killall ssh

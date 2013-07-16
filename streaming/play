@@ -5,12 +5,6 @@ gst-launch-1.0 -v udpsrc port=9070 ! 'application/x-rtp,payload=96,encoding-name
 
 #queue2 use-buffering=true low-percent=0 high-percent=100  low-percent=0 high-percent=100 max-size-buffers=0 max-size-bytes=0 max-size-time=1000000000 ! 
 
-# TCP
-#gst-launch-1.0 -v --gst-debug=eglgles:5 tcpclientsrc host=bonesaw port=9078 ! 'video/x-h264' ! h264parse ! omxh264dec ! autovideosink
-
-# file
-#gst-launch-1.0 -v filesrc location=src/c920.h264 ! h264parse ! omxh264dec ! autovideosink
-
 # stdin
 #gst-launch-1.0 -v filesrc location=/dev/stdin ! queue2 use-buffering=true low-percent=0 high-percent=100 max-size-buffers=0 max-size-bytes=0 max-size-time=200000000000 ! h264parse ! omxh264dec ! eglglessink sync=false
 
