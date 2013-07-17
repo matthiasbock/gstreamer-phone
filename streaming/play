@@ -5,7 +5,7 @@ if [ "$(pidof gst-launch-1.0)" != "" ]; then
 	fi
 
 # RTP
-gst-launch-1.0 -v udpsrc port=9070 ! 'application/x-rtp,payload=96,encoding-name=H264' ! queue2 use-buffering=true low-percent=0 high-percent=100 max-size-time=10000000000 ! rtph264depay ! h264parse ! omxh264dec ! eglglessink sync=false
+gst-launch-1.0 -v udpsrc port=9070 ! 'application/x-rtp,payload=96,encoding-name=H264' ! queue2 use-buffering=true low-percent=0 high-percent=100 max-size-time=1000000000 ! rtph264depay ! h264parse ! omxh264dec ! eglglessink sync=false
 
 #
 # stdin
