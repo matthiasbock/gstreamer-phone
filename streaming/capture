@@ -9,6 +9,9 @@ width=1024
 height=576
 framerate="15/1"
 
+target="$1"
+port=9080
+
 if [ "$1" == "" ]; then
 	echo "Parameter missing: Remote address"
 	exit
@@ -20,7 +23,7 @@ if [ "$(pidof gst-launch-0.10)" != "" ]; then
 
 
 # RTP over UDP
-RTP_UDP="rtph264pay ! udpsink host=\"$1\" port=9070"
+RTP_UDP="rtph264pay ! udpsink host=\"$target\" port=$port"
 
 # stdout / SSH tunnel
 STDOUT="filesink location=/dev/stdout"
