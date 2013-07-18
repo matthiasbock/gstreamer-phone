@@ -7,7 +7,7 @@
 bitrate=600000
 width=1024
 height=576
-framerate="5/1"
+framerate="30/1"
 
 target="$1"
 port=9080
@@ -21,7 +21,6 @@ if [ "$(pidof gst-launch-0.10)" != "" ]; then
 	kill -s KILL $(pidof gst-launch-0.10)
 	fi
 
-
 # RTP over UDP
 RTP_UDP="rtph264pay ! udpsink host=\"$target\" port=$port"
 
@@ -29,6 +28,7 @@ RTP_UDP="rtph264pay ! udpsink host=\"$target\" port=$port"
 STDOUT="filesink location=/dev/stdout"
 
 sink=$RTP_UDP
+#sink=$STDOUT
 
-gst-launch-0.10 -v uvch264_src device=/dev/video0 name=src auto-start=true initial-bitrate=$bitrate src.vfsrc ! queue ! 'video/x-raw-yuv,width=320,height=240' ! fakesink silent=true . src.vidsrc ! queue ! "video/x-h264,width=$width,height=$height,framerate=$framerate,profile=high" ! $sink
+gst-launch-0.10 -q uvch264_src device=/dev/video0 name=src auto-start=true initial-bitrate=$bitrate src.vfsrc ! queue ! 'video/x-raw-yuv,width=320,height=240' ! fakesink silent=true . src.vidsrc ! queue ! "video/x-h264,width=$width,height=$height,framerate=$framerate,profile=high" ! $sink
 

@@ -7,6 +7,10 @@
 # starts playback on the remote end via SSH command
 #
 
+#method="RTP"
+method="RTP"
+port=9080
+
 if [ "$1" == "" ]; then
 	echo "Error: Remote address not specified"
 	exit
@@ -15,7 +19,9 @@ if [ "$1" == "" ]; then
 gstreamer_phone="/usr/src/gstreamer-phone/streaming"
 
 # establish SSH tunnel to communication endpoint
-#killall ssh; sleep 1; ssh -o StrictHostKeyChecking=no root@$1 -fNR 9070:localhost:9070 
+if [ "$method" == "SSH" ]; then
+	killall ssh; sleep 1; ssh -v -o StrictHostKeyChecking=no root@$1 -fNR $port:localhost:$port
+	fi
 
 # begin playback on the remote end
 ssh -o ConnectTimeout=5 -o StrictHostKeyChecking=no root@$1 "$gstreamer_phone/play" &
@@ -24,12 +30,17 @@ ssh -o ConnectTimeout=5 -o StrictHostKeyChecking=no root@$1 "$gstreamer_phone/pl
 sleep 1
 
 # begin capturing + streaming
-$gstreamer_phone/capture "$1"
-#$gstreamer_phone/capture localhost
+if [ "$method" == "SSH" ]; then
+	$gstreamer_phone/capture localhost
+else
+	$gstreamer_phone/capture "$1"
+	fi
 
 # terminate playback on remote end
 ssh -o StrictHostKeyChecking=no root@$1 "killall gst-launch-1.0" 
 
 # close SSH tunnel
-#killall ssh
+if [ "$method" == "SSH" ]; then
+	killall ssh
+	fi
 
