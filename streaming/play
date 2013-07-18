@@ -4,10 +4,18 @@ if [ "$(pidof gst-launch-1.0)" != "" ]; then
 	kill -s KILL $(pidof gst-launch-1.0)
 	fi
 
-# RTP
-gst-launch-1.0 -v udpsrc port=9070 ! 'application/x-rtp,payload=96,encoding-name=H264' ! queue2 use-buffering=true low-percent=0 high-percent=100 max-size-time=1000000000 ! rtph264depay ! h264parse ! omxh264dec ! eglglessink sync=false
+listen_port=9080
 
-#
-# stdin
-#gst-launch-1.0 -v filesrc location=/dev/stdin ! queue2 use-buffering=true low-percent=0 high-percent=100 max-size-buffers=0 max-size-bytes=0 max-size-time=200000000000 ! h264parse ! omxh264dec ! eglglessink
+buffering="queue2 use-buffering=true low-percent=0 high-percent=100 max-size-time=1000000000"
+
+# read RTP over UDP
+RTP_UDP="udpsrc port=$listen_port ! queue ! application/x-rtp,payload=96,encoding-name=H264 ! rtph264depay"
+
+# read from STDIN / SSH tunnel
+STDIN="filesrc location=/dev/stdin"
+
+source=$RTP_UDP
+echo $source
+
+gst-launch-1.0 -v $source ! h264parse ! omxh264dec ! eglglessink sync=false
 
