@@ -4,10 +4,10 @@
 # $1: remote host to transfer video stream to
 #
 
-bitrate=400000
+bitrate=600000
 width=1024
 height=576
-framerate="15/1"
+framerate="5/1"
 
 target="$1"
 port=9080
