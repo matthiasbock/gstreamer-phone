@@ -15,9 +15,7 @@ if [ "$1" == "" ]; then
 gstreamer_phone="/usr/src/gstreamer-phone/streaming"
 
 # establish SSH tunnel to communication endpoint
-killall ssh
-sleep 1
-ssh -o StrictHostKeyChecking=no root@$1 -fNR 9070:localhost:9070 
+#killall ssh; sleep 1; ssh -o StrictHostKeyChecking=no root@$1 -fNR 9070:localhost:9070 
 
 # begin playback on the remote end
 ssh -o ConnectTimeout=5 -o StrictHostKeyChecking=no root@$1 "$gstreamer_phone/play" &
@@ -25,11 +23,13 @@ ssh -o ConnectTimeout=5 -o StrictHostKeyChecking=no root@$1 "$gstreamer_phone/pl
 # give the gstreamer on the remote end some time for startup
 sleep 1
 
-# begin capturing and streaming
-#$gstreamer_phone/capture "$1"
-$gstreamer_phone/capture localhost
+# begin capturing + streaming
+$gstreamer_phone/capture "$1"
+#$gstreamer_phone/capture localhost
 
+# terminate playback on remote end
 ssh -o StrictHostKeyChecking=no root@$1 "killall gst-launch-1.0" 
 
-killall ssh
+# close SSH tunnel
+#killall ssh
 
