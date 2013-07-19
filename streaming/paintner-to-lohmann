@@ -20,11 +20,11 @@ gstreamer_phone="/usr/src/gstreamer-phone/streaming"
 
 # establish SSH tunnel to communication endpoint
 if [ "$method" == "SSH" ]; then
-	killall ssh; sleep 1; ssh -v -o StrictHostKeyChecking=no root@$1 -fNR $port:localhost:$port
+	killall ssh; sleep 1; ssh -v -o ConnectTimeout=5 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no root@$1 -fNR $port:localhost:$port
 	fi
 
 # begin playback on the remote end
-ssh -o ConnectTimeout=5 -o StrictHostKeyChecking=no root@$1 "$gstreamer_phone/play" &
+ssh -o ConnectTimeout=5 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no root@$1 "$gstreamer_phone/play" &
 
 # give the gstreamer on the remote end some time for startup
 sleep 1
@@ -37,7 +37,7 @@ else
 	fi
 
 # terminate playback on remote end
-ssh -o StrictHostKeyChecking=no root@$1 "killall gst-launch-1.0" 
+ssh -o ConnectTimeout=5 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no root@$1 "killall gst-launch-1.0" 
 
 # close SSH tunnel
 if [ "$method" == "SSH" ]; then

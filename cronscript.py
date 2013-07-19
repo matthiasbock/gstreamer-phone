@@ -33,7 +33,7 @@ def internet():
 	f.write(default_hosts+ip+'\tpummeluff')
 	f.close()
 
-	Popen(split('scp -o ConnectTimeout=5 -o StrictHostKeyChecking=no /tmp/hosts root@la-cp386.no-ip.org:/etc/')).wait()
+	Popen(split('scp -o ConnectTimeout=5 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no /tmp/hosts root@la-cp386.no-ip.org:/etc/')).wait()
 	return ip
 
 def lan():
@@ -44,7 +44,7 @@ def lan():
 	f.write(default_hosts+ip+'\tpummeluff')
 	f.close()
 
-	Popen(split('scp -o ConnectTimeout=5 -o StrictHostKeyChecking=no /tmp/hosts root@urmel.local:/etc/')).wait()
+	Popen(split('scp -o ConnectTimeout=5 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no /tmp/hosts root@urmel.local:/etc/')).wait()
 	return ip
 
 if __name__ == '__main__':
