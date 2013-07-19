@@ -1,5 +1,5 @@
 #!/bin/bash
 
 gstreamer_phone="/usr/src/gstreamer-phone/streaming"
-ssh -o ConnectTimeout=5 -o StrictHostKeyChecking=no root@$1 "$gstreamer_phone/paintner-to-lohmann"
+ssh -o ConnectTimeout=5 -o StrictHostKeyChecking=no root@$1 "$gstreamer_phone/paintner-to-lohmann pummeluff"
 

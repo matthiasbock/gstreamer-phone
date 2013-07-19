@@ -22,7 +22,7 @@ if [ "$(pidof gst-launch-0.10)" != "" ]; then
 	fi
 
 # RTP over UDP
-RTP_UDP="rtph264pay ! udpsink host=\"$target\" port=$port"
+RTP_UDP="rtph264pay ! udpsink host=\"$target\" port=$port sync=false"
 
 # stdout / SSH tunnel
 STDOUT="filesink location=/dev/stdout"
