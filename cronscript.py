@@ -26,30 +26,26 @@ ff02::2         ip6-allrouters
 """
 
 def internet():
-	try:
-		ip = internetIP()
-		log('External IP address is '+ip)
+	ip = internetIP()
+	log('External IP address is '+ip)
 
-		f = open('/tmp/hosts','w')
-		f.write(default_hosts+ip+'\tpummeluff')
-		f.close()
+	f = open('/tmp/hosts','w')
+	f.write(default_hosts+ip+'\tpummeluff')
+	f.close()
 
-		Popen(split('scp /tmp/hosts root@la-cp386.no-ip.org:/etc/'), stdout=PIPE)
-	except:
-		pass
+	Popen(split('scp -o ConnectTimeout=5 -o StrictHostKeyChecking=no /tmp/hosts root@la-cp386.no-ip.org:/etc/')).wait()
+	return ip
 
 def lan():
-	try:
-		ip = lanIP()
-		log('LAN IP address is '+ip)
+	ip = lanIP()
+	log('LAN IP address is '+ip)
 
-		f = open('/tmp/hosts','w')
-		f.write(default_hosts)
-		f.close()
+	f = open('/tmp/hosts','w')
+	f.write(default_hosts+ip+'\tpummeluff')
+	f.close()
 
-		Popen(split('scp /tmp/hosts root@urmel.local:/etc/'), stdout=PIPE)
-	except:
-		pass
+	Popen(split('scp -o ConnectTimeout=5 -o StrictHostKeyChecking=no /tmp/hosts root@urmel.local:/etc/')).wait()
+	return ip
 
 if __name__ == '__main__':
 	try:

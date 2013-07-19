@@ -9,12 +9,12 @@ listen_port=9080
 #buffering="queue2 use-buffering=true low-percent=0 high-percent=100 max-size-time=1000000000"
 
 # read RTP over UDP
-RTP_UDP="udpsrc port=$listen_port ! queue ! application/x-rtp,payload=96,encoding-name=H264 ! rtpjitterbuffer ts-offset=500 latency=500 do-lost=true ! rtph264depay"
+RTP_UDP="udpsrc port=$listen_port ! queue ! application/x-rtp,payload=96,encoding-name=H264 ! rtpjitterbuffer latency=2000 do-lost=true ! rtph264depay"
 
 # read from STDIN / SSH tunnel
 STDIN="filesrc location=/dev/stdin"
 
 source=$RTP_UDP
+#source=$STDIN
 
 gst-launch-1.0 -v $source ! h264parse ! omxh264dec ! eglglessink sync=false
-

@@ -61,13 +61,13 @@ while True:
 		sleep(1)
 		if pressed(btnLeft): # still pressed
 			if pressed(btnRight): # both pressed at once
-				log("Reboot")
-				neustartton()
-				Popen(['reboot'])
-			else:
 				log("Shutdown")
 				herunterfahrton()
 				Popen(['halt'])
+#			else:
+#				log("Reboot")
+#				neustartton()
+#				Popen(['reboot'])
 		else:
 			Popen(split('killall ssh'), stdout=PIPE, stderr=PIPE)
 			Popen(split('killall gst-launch-0.10'), stdout=PIPE, stderr=PIPE)
