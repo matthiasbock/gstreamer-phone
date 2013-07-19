@@ -15,7 +15,7 @@ def internetIP():
 
 # mDNS lookup
 def lanIP():
-	return gethostbyname('urmel.local') #open('/etc/hostname').read().strip()+'.local'
+	return gethostbyname(open('/etc/hostname').read().strip()+'.local') 
 
 default_hosts = """127.0.0.1       localhost urmel
 ::1             localhost ip6-localhost ip6-loopback
@@ -27,31 +27,35 @@ ff02::2         ip6-allrouters
 
 def internet():
 	ip = internetIP()
-	log('External IP address is '+ip)
+	log('Our external IP address is '+ip)
 
 	f = open('/tmp/hosts','w')
 	f.write(default_hosts+ip+'\tpummeluff')
 	f.close()
 
+	log("Telling la-cp386.no-ip.org ...")
 	Popen(split('scp -o ConnectTimeout=5 -o StrictHostKeyChecking=no /tmp/hosts root@la-cp386.no-ip.org:/etc/')).wait()
 	return ip
 
 def lan():
 	ip = lanIP()
-	log('LAN IP address is '+ip)
+	log('Our LAN IP address is '+ip)
 
 	f = open('/tmp/hosts','w')
 	f.write(default_hosts+ip+'\tpummeluff')
 	f.close()
 
+	log("Telling urmel.local ...")
 	Popen(split('scp -o ConnectTimeout=5 -o StrictHostKeyChecking=no /tmp/hosts root@urmel.local:/etc/')).wait()
 	return ip
 
 if __name__ == '__main__':
 	try:
 		urmel = gethostbyname('urmel.local').strip()
-		if urmel == '' or lan() is None:
+		if urmel == '':
 			raise
+		lan()
 	except:
+		log("Problems contacting urmel.local.")
 		internet()
 
