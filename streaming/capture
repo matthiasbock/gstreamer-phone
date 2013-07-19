@@ -4,17 +4,18 @@
 # $1: remote host to transfer video stream to
 #
 
-bitrate=600000
+bitrate=400000
 width=1024
 height=576
-framerate="30/1"
+framerate="5/1"
 
 target="$1"
 port=9080
 
 if [ "$1" == "" ]; then
-	echo "Parameter missing: Remote address"
-	exit
+	#echo "Parameter missing: Remote address"
+	#exit
+	target="pummeluff"
 	fi
 
 if [ "$(pidof gst-launch-0.10)" != "" ]; then
@@ -30,5 +31,5 @@ STDOUT="filesink location=/dev/stdout"
 sink=$RTP_UDP
 #sink=$STDOUT
 
-gst-launch-0.10 -q uvch264_src device=/dev/video0 name=src auto-start=true initial-bitrate=$bitrate src.vfsrc ! queue ! 'video/x-raw-yuv,width=320,height=240' ! fakesink silent=true . src.vidsrc ! queue ! "video/x-h264,width=$width,height=$height,framerate=$framerate,profile=high" ! $sink
+gst-launch-0.10 -q uvch264_src device=/dev/video0 name=src auto-start=true initial-bitrate=$bitrate usage-type=realtime src.vfsrc ! queue ! 'video/x-raw-yuv,width=320,height=240' ! fakesink silent=true . src.vidsrc ! queue ! "video/x-h264,width=$width,height=$height,profile=high" ! $sink
 
